@@ -2,6 +2,15 @@
 
 Sistema completo para gerenciamento de horas trabalhadas de funcionários organizados em squads.
 
+Fotos do sistema:
+
+Mobile:
+<img width="1636" height="856" alt="image" src="https://github.com/user-attachments/assets/30d5a825-d45c-4e71-ab78-45c05e5a0cd9" />
+
+Web:
+<img width="1550" height="722" alt="image" src="https://github.com/user-attachments/assets/a1a3eee6-32f5-4491-bd4c-bcd6feb8764b" />
+<img width="1553" height="719" alt="image" src="https://github.com/user-attachments/assets/d51699be-a0c5-4809-86c1-b4ea5627436d" />
+
 ---
 
 ## ⚡ Quick Start
