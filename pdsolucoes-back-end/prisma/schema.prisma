@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String    @id @default(uuid())
+  email            String    @unique
+  password         String
+  name             String
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  refreshToken     String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Squad {
+  id        String     @id @default(uuid())
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  employees Employee[]
+
+  @@map("squads")
+}
+
+model Employee {
+  id             String   @id @default(uuid())
+  name           String
+  estimatedHours Int
+  squadId        String
+  squad          Squad    @relation(fields: [squadId], references: [id], onDelete: Cascade)
+  reports        Report[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("employees")
+}
+
+model Report {
+  id          String   @id @default(uuid())
+  description String
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  spentHours  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("reports")
+}
+
+model Log {
+  id String @id @default(uuid())
+
+  level       String
+  errorCode   String?
+  message     String
+  path        String?
+  layer       String?
+
+  httpMethod     String?
+  httpUrl        String?
+  httpStatusCode Int?
+  responseTime   Int?
+
+  userId    String?
+  userEmail String?
+  userName  String?
+
+  ip             String?
+  userAgent      String?
+  referer        String?
+  origin         String?
+  acceptLanguage String?
+
+  requestHeaders Json?
+  requestBody    Json?
+  requestParams  Json?
+  requestQuery   Json?
+  responseBody   Json?
+
+  stack          String?
+  errorName      String?
+  errorMessage   String?
+  isOperational  Boolean @default(true)
+
+  environment    String?
+  serverInstance String?
+  nodeVersion    String?
+  appVersion     String?
+
+  additionalData Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([level])
+  @@index([errorCode])
+  @@index([userId])
+  @@index([createdAt])
+  @@index([httpStatusCode])
+  @@index([httpMethod])
+  @@map("logs")
+}
+
